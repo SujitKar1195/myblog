@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<%- include('./partials/head')%>
+		<title>Blogs</title>
+
+
+</head>
+
+<body class="body">
+	<%- include('./partials/nav')%>
+		<div class="container mt-3">
+			<div class="card mt-3" style="width: 25rem;">
+				<img src="../public/<%=blog.coverImage%>" class="card-img-top">
+				<div class="card-body">
+					<h5 class="card-title">
+						<%= blog.title%>
+					</h5>
+					<p class="card-text">
+						<%= blog.body%>
+					</p>
+
+				</div>
+
+			</div>
+			<div class="container mt-3">
+				<img src="<%= blog.createdBy.profileImageUrl%>" width="70rem" />
+				<p>
+					<%=blog.createdBy.name%>
+				</p>
+			</div>
+			<hr>
+			<h3 class="text-primary">Comments(<%=comments.length%>)</h3>
+			<% if (locals.user) { %>
+				<div class="container mt-3">
+
+					<form action='/blog/comment/<%=blog._id%>' method="post">
+						<div class="mb-3">
+							<input type="text" class="form-control" id="content" name="content"
+								placeholder="Enter your comment">
+						</div>
+
+						<div class="mb-3">
+							<button class="btn btn-success btn-sm">Send</button>
+						</div>
+
+					</form>
+
+				</div>
+				<% } %>
+					<div class="mt-3">
+						<% comments.forEach(comment=> {%>
+							<img src="<%= comment.createdBy.profileImageUrl%>" width="70rem" />
+							<pre><%=comment.createdBy.name%>:<br><%=comment.content%></pre>
+							<%});%>
+					</div>
+		</div>
+		<%- include('./partials/script')%>
+</body>
+
+</html>
